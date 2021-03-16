@@ -1,3 +1,5 @@
+import response from "../../util/response";
+
 class Lobby {
 	constructor() {
 		this._roomList = [];
@@ -9,6 +11,8 @@ class Lobby {
 	}
 
 	createRoom(player, title) {
+		if (title.length < 4 || title.length > 16)
+			return response(null, 'Room title must have between 4 and 16 characters.');
 		const room = {
 			id: this.createdRooms,
 			owner: player.nick,
@@ -17,10 +21,7 @@ class Lobby {
 		this._roomList.push(room);
 		this.createdRooms++;
 
-		return {
-			ok: true,
-			msg:'room succesful created'
-		};
+		return response(room);
 	}
 
 	removeRoom() {

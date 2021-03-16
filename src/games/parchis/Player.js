@@ -14,7 +14,7 @@ class Player {
 	}
 
 	createRoom(title) {
-		return this._lobby.createRoom(this, title);
+		return this.lobby.createRoom(this, title);
 	}
 }
 

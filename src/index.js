@@ -31,6 +31,6 @@ io.on('connection', (socket) => {
 		console.log(`user disconnected ${socket.id}`);
 	});
 
-	parchis.sockets.game(socket);
-	parchis.sockets.lobby(socket, parchisLobby);
+	parchis.sockets.game(socket, io);
+	parchis.sockets.lobby(socket, io, parchisLobby);
 });

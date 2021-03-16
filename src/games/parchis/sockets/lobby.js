@@ -1,7 +1,8 @@
 import Player from '../Player';
 
-const lobby = (socket, lobby) => {
+const lobby = (socket, io, lobby) => {
 	socket.on('create parchis player', () => {
+		console.log(lobby)
 		socket.player = new Player(lobby);
 		console.log(`user ${socket.id} created a new player`);
 	});
@@ -11,8 +12,9 @@ const lobby = (socket, lobby) => {
 	});
 
 	socket.on('create parchis room', (title, callback) => {
-		const msg = socket.player.createRoom(title);
-		callback(msg);
+		const response = socket.player.createRoom(title);
+		callback(response);
+		if (!response.error) io.emit('room created');
 	});
 }
 

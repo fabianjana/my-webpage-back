@@ -1,4 +1,4 @@
-const game = (socket) => {
+const game = (socket, io) => {
 	socket.on('init parchis', (callback) => {
 		const initState = { selectedPiece: '', pieces: {} };
 		for (let i = 0; i < 4; i ++) {
