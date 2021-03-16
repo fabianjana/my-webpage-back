@@ -1,35 +1,36 @@
 import 'dotenv/config';
-import cors from 'cors';
+// import cors from 'cors';
 import express from 'express';
 import { Server } from "socket.io";
 
+import parchis from './games/parchis';
 import routes from './routes';
-import sockets from './sockets';
 
 const app = express();
+const parchisLobby = parchis.lobby;
 
 // enable CORS
-app.use(cors());
+// app.use(cors());
 
 // routes
 app.use('/data', routes.data);
-app.use('/parchis', routes.parchis);
+app.use('/api/parchis', routes.parchis);
  
 // create server
 const server = app.listen(process.env.PORT, () =>
 	console.log(`Example app listening on port ${process.env.PORT}!`),
 );
 
-// create socket
-const io = new Server(server, {
-	cors: {
-		origin: 'http://localhost:3000',
-		methods: ['GET', 'POST'],
-		credentials: true
-	}
-});
+const io = new Server(server);
 
+// socket management
 io.on('connection', (socket) => {
-	console.log(socket.id);
-	sockets(socket);
+	console.log(`user connected ${socket.id}`);
+
+	socket.on('disconnect', () => {
+		console.log(`user disconnected ${socket.id}`);
+	});
+
+	parchis.sockets.game(socket);
+	parchis.sockets.lobby(socket, parchisLobby);
 });

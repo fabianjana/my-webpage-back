@@ -122,7 +122,7 @@
   },
   "scripts": {
     "start": "nodemon --exec babel-node src/index.js",
-    "test": "mocha --require @babel/register 'test/**"
+    "test": "mocha --require @babel/register 'test/**.spec.js'"
   },
   "keywords": [],
   "author": "",
